@@ -1,9 +1,30 @@
 import styled from 'styled-components'
 import {useRecoilValue} from 'recoil'
-import { holdSizeState } from './app.state'
+import {holdSizeState, holdState, loadingState} from './app.state'
 
 const SpaceshipView = () => {
   const { width, height } = useRecoilValue(holdSizeState)
+  const holdConfiguration = useRecoilValue(holdState)
+  const loadingConfiguration = useRecoilValue(loadingState)
+
+  const determineColor = (index: number): string | undefined => {
+    const y = height - (~~(index / width))
+    const x = index % width
+
+    if (y <= holdConfiguration[x]) {
+      return 'rgba(149,93,222,0.3)'
+    }
+
+    const loadHeight = loadingConfiguration
+      .find(({ index }) => index === x)
+      ?.amount ?? 0
+
+    if (y <= loadHeight + holdConfiguration[x]) {
+      return 'rgba(215,28,255,0.3)'
+    }
+
+    return undefined
+  }
 
   return (
     <SpaceshipViewContainer>
@@ -15,6 +36,7 @@ const SpaceshipView = () => {
               return (
                 <SpaceshipCell
                   key={index}
+                  color={determineColor(index)}
                 />
               )
             })
@@ -26,7 +48,8 @@ const SpaceshipView = () => {
 
 const SpaceshipCell = styled.div<{ color?: string }>`
   background-color: ${({ color }) => color ?? 'rgba(220,220,220,0.3)'};
-  
+  transition-property: background-color;
+  transition: 0.3s all ease-in;
 `
 
 const SpaceshipGrid = styled.div<{ width: number, height: number }>`
