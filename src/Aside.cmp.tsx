@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { rawHoldState, loadingCapacityState } from './app.state'
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 const Aside = () => {
   const [hold, setHold] = useRecoilState(rawHoldState)
@@ -35,9 +35,67 @@ const Aside = () => {
           placeholder='Resulting capacity...'
         />
       </div>
+      <Story />
     </AsideContainer>
   )
 }
+
+const prepareText = (text: string) => {
+  return text
+    .trim()
+    .split('\n')
+    .map(line => line.trim())
+    .join(' ')
+}
+
+const repeat = (text: string, times: number) => {
+  return Array(times)
+    .fill(null)
+    .map(() => text)
+    .join('')
+}
+
+const Story = () => {
+  const interval = 50
+  const fullText = prepareText(`
+    You are a star pilot trying
+    to transport an important
+    and super-secret cargo to Mars.
+    Design your hold
+    to contain all of the cargo.
+    Write configuration of your hold
+    into 'Spaceship' field separating
+    each number by comma.
+  `)
+
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setIndex(index => {
+        return Math.min(index + 1, fullText.length)
+      })
+    }, interval)
+    return () => clearInterval(intervalId)
+  }, [fullText.length])
+
+  return (
+    <StoryText>
+      {
+        fullText.slice(0, index) +
+          repeat('_', fullText.length - index)
+      }
+    </StoryText>
+  )
+}
+
+const StoryText = styled.p`
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: rgba(255, 255, 255, 0.3) 0 2px 8px 0;
+  padding: 0.5em;
+  border-radius: 8px;
+  word-break: break-all;
+`
 
 const StyledInput = styled.input`
   --styled-input-color: white;
@@ -69,7 +127,7 @@ const AsideContainer = styled.aside`
   padding: 1em 2em;
 
   & > * + * {
-    margin-top: 0.5em;
+    margin-top: 1em;
   }
 `
 
