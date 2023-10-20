@@ -1,5 +1,7 @@
 ## Project made for Sofixit 'Code Wars' competition
 
+### Check it online: [GitHub Pages](https://it1shka.github.io/material-visualization/)
+
 The project is written for demonstrating purposes of
 my algorithm
 
