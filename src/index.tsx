@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Chivo Mono', monospace;
     font-family: 'VT323', monospace;
 
-    background: url(material-visualization/background.png) no-repeat center center fixed;
+    background: url(background.png) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
