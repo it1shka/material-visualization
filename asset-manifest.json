@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/material-visualization/static/js/main.a97571a1.js",
+    "main.js": "/material-visualization/static/js/main.61bf360f.js",
     "index.html": "/material-visualization/index.html",
-    "main.a97571a1.js.map": "/material-visualization/static/js/main.a97571a1.js.map"
+    "main.61bf360f.js.map": "/material-visualization/static/js/main.61bf360f.js.map"
   },
   "entrypoints": [
-    "static/js/main.a97571a1.js"
+    "static/js/main.61bf360f.js"
   ]
 }
